@@ -1,0 +1,24 @@
+pipeline {
+    agent any
+
+    parameters {
+     string(name: 'USERNAME', defaultValue: 'admin', description: 'Username for the deployment')
+    }
+    stages {
+        stage('Hello') {
+            steps { 
+                 script {
+                    if (params.USERNAME == null || params.USERNAME.trim().isEmpty()) {
+                        error("Error: USERNAME cannot be empty.")
+                    } else if (params.USERNAME.length() < 5) {
+                        error("Error: USERNAME must be at least 5 characters long.")
+                    } else {
+                        echo "USERNAME is valid."
+                    }
+                }
+                
+                echo "${params.USERNAME}, $BUILD_NUMBER the build is running!"
+            }
+        }
+    }
+}
