@@ -1,0 +1,16 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('fetch') {
+            steps {
+                git branch: 'main', url: 'https://github.com/transitionmaster-training/html-website.git'
+            }
+        }
+         stage('deploy') {
+            steps {
+                bat 'copy "index.html" "C:\\sample.com"'
+            }
+        }
+    }
+}
