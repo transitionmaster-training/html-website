@@ -1,0 +1,22 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('fetch') {
+            steps {
+                git branch: 'main', url: 'https://github.com/transitionmaster-training/html-website.git'
+            }
+        }
+         stage('deploy') {
+            steps {
+                bat 'copy "index.html" "C:\\sample.com"'
+            }
+        }
+         stage('email') {
+            steps {
+                echo "The current build number is: ${env.BUILD_NUMBER}"
+                mail to:'your.email@gmail.com', subject:'Sample Email for ${BUILD_NUMBER}', body:'Provide key details for triage and investigation if something goes wrong.'
+            }
+        }
+    }
+}
